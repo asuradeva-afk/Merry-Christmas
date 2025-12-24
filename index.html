@@ -222,12 +222,22 @@
 
         // ===== MUSIC PLAYLIST =====
         const playlist = [
-        'musics/All I Want for Christmas Is You.mp3',
-        'musics/Feliz Navidad.mp3',
-        'musics/Jingle Bell Rock.mp3',
-        'musics/Jingle Bells.mp3',
-        'musics/Last Christmas.mp3'
+            'musics/All I Want for Christmas Is You.mp3',
+            'musics/Feliz Navidad.mp3',
+            'musics/Jingle Bell Rock.mp3',
+            'musics/Jingle Bells.mp3',
+            'musics/Last Christmas.mp3',
+            'musics/Christmas Alphabet.mp3',
+            'musics/Holly Jolly Christmas.mp3',
+            'musics/O Christmas Tree.mp3',
+            'musics/Ting a Ling a Jingle.mp3'
         ];
+
+        // 🔥 XÁO TRỘN PLAYLIST (Fisher–Yates)
+        for (let i = playlist.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+        }
 
         let currentTrack = 0;
         const bgm = document.getElementById('bgm');
@@ -239,15 +249,14 @@
             bgm.play().catch(()=>{});
         }
 
-        // phát bài tiếp theo khi bài hiện tại kết thúc
         bgm.addEventListener('ended', () => {
             playTrack(currentTrack + 1);
         });
 
-        // ⚠️ nhạc chỉ phát sau cú click đầu tiên (đúng policy trình duyệt)
         window.addEventListener('click', () => {
             if (bgm.paused) playTrack(currentTrack);
         }, { once: true });
+
 
 
         const CONFIG = {
@@ -691,19 +700,18 @@
         function loadPredefinedImages() {
             const loader = new THREE.TextureLoader();
             
-            for (let i = 1; i <= 61; i++) {
-        loader.load(
-            `./images/${i}.png`,
-            (t) => {
-                t.colorSpace = THREE.SRGBColorSpace;
-                addPhotoToScene(t);
-            },
-            undefined,
-            (err) => {
-                console.warn("Failed to load image:", i, err);
-            }
-        );
-    }
+            for (let i = 1; i <= 62; i++) {
+                loader.load(`./images/${i}.jpg`,
+                    (t) => {
+                    t.colorSpace = THREE.SRGBColorSpace;
+                    addPhotoToScene(t);
+                },
+                undefined,
+                (err) => {
+                    console.warn("Failed to load image:", i, err);
+                }
+            );
+        }  
         }
 
         // --- MEDIAPIPE ---
